@@ -31,10 +31,19 @@
       <a href="#contacto" class="btn btn-verde">Quiero empezar</a>
       <a href="#proceso" class="btn btn-outline">Ver cómo funciona</a>
     </div>
+    <!-- Cambio 3: trust badges -->
+    <div class="hero-trust fade-in">
+      <span>✅ Sin contratos</span>
+      <span class="trust-sep">·</span>
+      <span>✅ Cancela cuando quieras</span>
+      <span class="trust-sep">·</span>
+      <span>✅ Respuesta en 24h</span>
+    </div>
+    <!-- Cambio 1: nuevo social proof -->
     <div class="fade-in">
       <div class="social-proof">
         <span class="stars">★★★★★</span>
-        Más de 50 negocios confían en nosotros
+        Gestión profesional para negocios locales españoles
       </div>
     </div>
   </div>
@@ -99,10 +108,11 @@
   <div class="container">
     <h2 class="section-titulo fade-in">Tres pasos y listo</h2>
     <div class="pasos">
+      <!-- Cambio 4: Paso 1 actualizado -->
       <div class="paso fade-in">
         <div class="paso-num">1</div>
-        <h3>Nos dejas tus datos</h3>
-        <p>Rellena el formulario en menos de un minuto y te contactamos nosotros.</p>
+        <h3>Déjanos tu contacto</h3>
+        <p>Rellena el formulario y te escribimos nosotros en menos de 24 horas.</p>
       </div>
       <div class="paso fade-in">
         <div class="paso-num">2</div>
@@ -125,6 +135,8 @@
     <div class="precio-card fade-in">
       <div class="precio-amount"><span>€</span>15</div>
       <div class="precio-periodo">al mes · todo incluido</div>
+      <!-- Cambio 2: plazas limitadas -->
+      <div class="plazas-badge">🔥 Plazas limitadas este mes</div>
       <ul class="precio-lista">
         <li>Respuesta a todas las reseñas</li>
         <li>Sin límite de reseñas</li>
@@ -137,6 +149,21 @@
         Quiero empezar por 15€/mes
       </a>
       <p class="precio-nota">Pago mensual por Bizum o transferencia. Sin sorpresas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Cambio 5: ¿Para qué negocios? -->
+<section id="negocios">
+  <div class="container">
+    <h2 class="section-titulo fade-in">¿Para qué negocios?</h2>
+    <div class="negocios-grid">
+      <div class="negocio-card fade-in"><span>💇</span><p>Peluquerías</p></div>
+      <div class="negocio-card fade-in"><span>🍽️</span><p>Restaurantes</p></div>
+      <div class="negocio-card fade-in"><span>🔧</span><p>Fontaneros</p></div>
+      <div class="negocio-card fade-in"><span>⚡</span><p>Electricistas</p></div>
+      <div class="negocio-card fade-in"><span>🦷</span><p>Clínicas</p></div>
+      <div class="negocio-card fade-in"><span>🏋️</span><p>Gimnasios</p></div>
     </div>
   </div>
 </section>
@@ -211,22 +238,23 @@
   </div>
 </section>
 
-<!-- ── CONTACTO ── -->
+<!-- Cambio 7: nueva sección CONTACTO -->
 <section id="contacto">
   <div class="container">
-    <h2 class="fade-in">Empieza hoy.<br>Tu competencia no duerme.</h2>
-    <p class="subtitulo fade-in">Déjanos tu nombre y teléfono y te contactamos nosotros. Sin compromiso.</p>
+    <h2 class="fade-in">¿Hablamos?</h2>
+    <p class="subtitulo fade-in">Déjanos tu Instagram o email y te escribimos nosotros en menos de 24 horas.</p>
     <div class="form-card fade-in">
-      <form id="contactForm" class="form-grupo" novalidate>
+      <form id="contactForm" action="https://formspree.io/f/XXXXXXXX" method="POST" class="form-grupo">
         <div class="campo">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+          <label for="contacto_ig">Tu Instagram o email</label>
+          <input type="text" id="contacto_ig" name="contacto" placeholder="@tunegocio o tucorreo@gmail.com" required />
         </div>
         <div class="campo">
-          <label for="telefono">Teléfono</label>
-          <input type="tel" id="telefono" name="telefono" placeholder="600 000 000" required />
+          <label for="negocio">Nombre de tu negocio</label>
+          <input type="text" id="negocio" name="negocio" placeholder="Peluquería María, Bar El Rincón..." required />
         </div>
         <button type="submit" class="btn btn-verde form-submit">Quiero que me contactéis</button>
+        <p class="form-legal">Sin compromiso. Sin contratos. Solo 15€/mes.</p>
       </form>
       <div class="form-ok" id="formOk">
         <div class="ok-icono">
@@ -236,17 +264,20 @@
         <p>Te contactamos en menos de 24 horas.</p>
       </div>
     </div>
-    <p class="garantia fade-in">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.65)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Primer mes sin compromiso · Garantía de devolución
-    </p>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- Cambio 6: banner garantía -->
+<div class="garantia-banner">
+  <div class="container">
+    💰 <strong>Garantía total:</strong> Si en 30 días no estás satisfecho, te devolvemos el dinero. Sin preguntas.
+  </div>
+</div>
+
+<!-- Cambio 8: footer actualizado -->
 <footer>
   <div class="container">
-    <strong>Reseñas Gestionadas</strong> · Gestión profesional de reseñas de Google
+    <strong>Reseñas Gestionadas</strong> · Gestión profesional de reseñas de Google para negocios locales
   </div>
 </footer>
 

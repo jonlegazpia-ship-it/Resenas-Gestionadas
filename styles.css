@@ -292,10 +292,63 @@ footer {
 }
 footer strong { color: var(--blanco); }
 
+/* ── HERO TRUST BADGES ── */
+.hero-trust {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 10px 6px;
+  color: rgba(255,255,255,.85); font-size: .9rem; font-weight: 500;
+  margin-bottom: 20px;
+}
+.trust-sep { color: rgba(255,255,255,.4); }
+
+/* ── PRECIO: PLAZAS BADGE ── */
+.plazas-badge {
+  display: inline-block;
+  background: #fff3e0; color: #e65100;
+  font-size: .82rem; font-weight: 700;
+  border-radius: 50px; padding: 6px 16px;
+  margin-bottom: 24px; letter-spacing: .2px;
+}
+
+/* ── NEGOCIOS ── */
+#negocios { background: var(--gris); }
+.negocios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+.negocio-card {
+  background: var(--blanco); border-radius: var(--radio);
+  padding: 28px 16px; text-align: center;
+  box-shadow: var(--sombra);
+  transition: box-shadow .22s, transform .22s;
+}
+.negocio-card:hover { box-shadow: var(--sombra-hover); transform: translateY(-4px); }
+.negocio-card span { font-size: 2rem; display: block; margin-bottom: 10px; }
+.negocio-card p { font-size: .95rem; font-weight: 600; color: var(--azul); }
+
+/* ── GARANTÍA BANNER ── */
+.garantia-banner {
+  background: var(--azul);
+  color: var(--blanco);
+  text-align: center;
+  padding: 22px 24px;
+  font-size: 1rem; line-height: 1.5;
+}
+.garantia-banner strong { color: var(--verde); }
+
+/* ── CONTACTO: form legal ── */
+.form-legal {
+  text-align: center; font-size: .8rem;
+  color: var(--texto-suave); margin-top: 4px;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
   section { padding: 60px 0; }
   .precio-card { padding: 36px 24px; }
   .hero-btns { flex-direction: column; align-items: center; }
   .hero-btns .btn { width: 100%; max-width: 320px; }
+  .negocios-grid { grid-template-columns: repeat(3, 1fr); }
+  .hero-trust { font-size: .82rem; }
 }

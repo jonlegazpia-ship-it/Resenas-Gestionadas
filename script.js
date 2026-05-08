@@ -1,12 +1,25 @@
-// ── Formulario contacto ──
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const nombre = document.getElementById('nombre').value.trim();
-  const telefono = document.getElementById('telefono').value.trim();
-  if (!nombre || !telefono) return;
-  this.style.display = 'none';
-  document.getElementById('formOk').style.display = 'block';
-});
+// ── Formulario contacto con Formspree ──
+const form = document.getElementById('contactForm');
+if (form) {
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = new FormData(form);
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        document.getElementById('formOk').style.display = 'block';
+      }
+    } catch (_) {
+      form.style.display = 'none';
+      document.getElementById('formOk').style.display = 'block';
+    }
+  });
+}
 
 // ── FAQ acordeón ──
 document.querySelectorAll('.faq-pregunta').forEach(btn => {
