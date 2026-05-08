@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reseñas Gestionadas — Gestión profesional de reseñas de Google</title>
+  <meta name="description" content="Respondemos todas las reseñas de Google de tu negocio de forma profesional, rápida y personalizada. Por solo 15€/mes. Sin contratos." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --azul: #1a237e;
+      --azul-claro: #283593;
+      --verde: #00c853;
+      --verde-hover: #00a844;
+      --gris: #f5f5f7;
+      --gris-medio: #e8e8ed;
+      --texto: #1a1a2e;
+      --texto-suave: #5a5a72;
+      --blanco: #ffffff;
+      --radio: 14px;
+      --sombra: 0 4px 24px rgba(26,35,126,0.10);
+      --sombra-hover: 0 8px 36px rgba(26,35,126,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--blanco);
+      color: var(--texto);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── UTILIDADES ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 28px; border-radius: 50px; font-size: 1rem; font-weight: 600;
+      text-decoration: none; cursor: pointer; border: none; transition: all .22s ease;
+      line-height: 1;
+    }
+    .btn-verde {
+      background: var(--verde); color: var(--blanco);
+      box-shadow: 0 4px 16px rgba(0,200,83,0.30);
+    }
+    .btn-verde:hover { background: var(--verde-hover); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,200,83,0.40); }
+    .btn-outline {
+      background: transparent; color: var(--blanco);
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+    .btn-azul {
+      background: var(--azul); color: var(--blanco);
+      box-shadow: 0 4px 16px rgba(26,35,126,0.25);
+    }
+    .btn-azul:hover { background: var(--azul-claro); transform: translateY(-2px); }
+
+    section { padding: 80px 0; }
+
+    .section-titulo {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800; color: var(--azul);
+      text-align: center; margin-bottom: 48px; line-height: 1.25;
+    }
+
+    /* Animación scroll */
+    .fade-in {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gris-medio);
+      padding: 14px 0;
+    }
+    nav .container {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.15rem; font-weight: 800; color: var(--azul);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo svg { flex-shrink: 0; }
+    .nav-btn { padding: 10px 22px; font-size: .9rem; }
+
+    /* ── HERO ── */
+    #hero {
+      background: linear-gradient(135deg, var(--azul) 0%, #311b92 100%);
+      padding: 100px 0 90px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,200,83,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #hero .container { position: relative; }
+    #hero h1 {
+      font-size: clamp(2rem, 5.5vw, 3.2rem);
+      font-weight: 900; color: var(--blanco); line-height: 1.15;
+      margin-bottom: 22px; letter-spacing: -.5px;
+    }
+    #hero h1 span { color: var(--verde); }
+    #hero p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: rgba(255,255,255,.82); max-width: 620px;
+      margin: 0 auto 36px;
+    }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
+    .social-proof {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50px; padding: 10px 20px;
+      color: rgba(255,255,255,.9); font-size: .92rem; font-weight: 500;
+    }
+    .stars { color: #ffd600; font-size: 1rem; letter-spacing: 2px; }
+
+    /* ── PROBLEMA ── */
+    #problema { background: var(--gris); }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: var(--blanco); border-radius: var(--radio);
+      padding: 32px 28px; box-shadow: var(--sombra);
+      transition: box-shadow .22s, transform .22s;
+    }
+    .card:hover { box-shadow: var(--sombra-hover); transform: translateY(-4px); }
+    .card-emoji { font-size: 2.2rem; margin-bottom: 16px; display: block; }
+    .card p { color: var(--texto-suave); font-size: 1rem; font-weight: 500; line-height: 1.5; }
+
+    /* ── SOLUCIÓN ── */
+    #solucion { background: var(--blanco); }
+    .checks-lista { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+    .check-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--gris); border-radius: var(--radio);
+      padding: 20px 24px;
+    }
+    .check-icono {
+      flex-shrink: 0; width: 28px; height: 28px;
+      background: var(--verde); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .check-icono svg { width: 14px; height: 14px; }
+    .check-item p { font-size: 1rem; font-weight: 500; color: var(--texto); }
+
+    /* ── PROCESO ── */
+    #proceso { background: var(--gris); }
+    .pasos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+    .paso {
+      background: var(--blanco); border-radius: var(--radio);
+      padding: 36px 28px; box-shadow: var(--sombra); text-align: center;
+      transition: box-shadow .22s, transform .22s; position: relative;
+    }
+    .paso:hover { box-shadow: var(--sombra-hover); transform: translateY(-4px); }
+    .paso-num {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--azul), #311b92);
+      color: var(--blanco); font-size: 1.4rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .paso h3 { font-size: 1.1rem; font-weight: 700; color: var(--azul); margin-bottom: 10px; }
+    .paso p { color: var(--texto-suave); font-size: .95rem; }
+
+    /* ── PRECIO ── */
+    #precio { background: var(--blanco); }
+    .precio-card {
+      max-width: 460px; margin: 0 auto;
+      background: var(--blanco); border-radius: 20px;
+      border: 2.5px solid var(--verde);
+      box-shadow: 0 8px 48px rgba(0,200,83,.18);
+      padding: 48px 40px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .precio-card::before {
+      content: '⭐ MÁS POPULAR';
+      position: absolute; top: 16px; right: -28px;
+      background: var(--verde); color: var(--blanco);
+      font-size: .7rem; font-weight: 700; letter-spacing: 1px;
+      padding: 5px 40px; transform: rotate(35deg);
+    }
+    .precio-amount {
+      font-size: 3.8rem; font-weight: 900; color: var(--azul);
+      line-height: 1; margin-bottom: 4px;
+    }
+    .precio-amount span { font-size: 1.4rem; vertical-align: super; font-weight: 700; }
+    .precio-periodo { color: var(--texto-suave); font-size: .95rem; margin-bottom: 32px; }
+    .precio-lista { list-style: none; text-align: left; margin-bottom: 32px; display: flex; flex-direction: column; gap: 12px; }
+    .precio-lista li {
+      display: flex; align-items: center; gap: 12px;
+      font-size: .97rem; font-weight: 500; color: var(--texto);
+    }
+    .precio-lista li::before {
+      content: '';
+      display: block; flex-shrink: 0;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--verde);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: 12px; background-repeat: no-repeat; background-position: center;
+    }
+    .precio-nota { font-size: .83rem; color: var(--texto-suave); margin-top: 16px; }
+    .precio-btn { width: 100%; font-size: 1.05rem; padding: 16px 28px; margin-bottom: 8px; }
+
+    /* ── FAQ ── */
+    #faq { background: var(--gris); }
+    .faq-lista { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: var(--blanco); border-radius: var(--radio);
+      box-shadow: var(--sombra); overflow: hidden;
+    }
+    .faq-pregunta {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 22px 24px; text-align: left;
+      font-size: 1rem; font-weight: 600; color: var(--azul);
+      transition: background .18s;
+    }
+    .faq-pregunta:hover { background: var(--gris); }
+    .faq-icono {
+      flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+      background: var(--gris-medio); display: flex; align-items: center; justify-content: center;
+      transition: transform .25s, background .25s;
+    }
+    .faq-item.abierto .faq-icono { transform: rotate(45deg); background: var(--verde); }
+    .faq-icono svg { width: 12px; height: 12px; transition: stroke .25s; }
+    .faq-item.abierto .faq-icono svg { stroke: white; }
+    .faq-respuesta {
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, padding .35s ease;
+      padding: 0 24px;
+      font-size: .97rem; color: var(--texto-suave); line-height: 1.6;
+    }
+    .faq-item.abierto .faq-respuesta { max-height: 200px; padding: 0 24px 22px; }
+
+    /* ── CONTACTO ── */
+    #contacto {
+      background: linear-gradient(135deg, var(--azul) 0%, #311b92 100%);
+      text-align: center; padding: 90px 0;
+    }
+    #contacto h2 { color: var(--blanco); font-size: clamp(1.6rem, 4vw, 2.3rem); font-weight: 900; margin-bottom: 14px; }
+    #contacto .subtitulo { color: rgba(255,255,255,.8); font-size: 1.05rem; max-width: 540px; margin: 0 auto 44px; }
+
+    .form-card {
+      background: var(--blanco); border-radius: 20px;
+      max-width: 460px; margin: 0 auto;
+      padding: 36px 32px;
+      box-shadow: 0 16px 64px rgba(0,0,0,.25);
+      text-align: left;
+    }
+    .form-grupo { display: flex; flex-direction: column; gap: 14px; }
+    .campo { display: flex; flex-direction: column; gap: 5px; }
+    .campo label { font-size: .82rem; font-weight: 600; color: var(--azul); }
+    .campo input {
+      border: 1.5px solid var(--gris-medio); border-radius: 10px;
+      padding: 12px 14px; font-size: .97rem; font-family: inherit;
+      color: var(--texto); background: var(--gris);
+      transition: border-color .2s, box-shadow .2s; outline: none; width: 100%;
+    }
+    .campo input:focus {
+      border-color: var(--azul); background: var(--blanco);
+      box-shadow: 0 0 0 3px rgba(26,35,126,.1);
+    }
+    .form-submit { width: 100%; margin-top: 4px; font-size: 1.05rem; padding: 15px; }
+
+    .form-ok {
+      display: none; text-align: center; padding: 12px 0;
+    }
+    .form-ok .ok-icono {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--verde); margin: 0 auto 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .form-ok .ok-icono svg { width: 24px; height: 24px; }
+    .form-ok h4 { font-size: 1.1rem; font-weight: 800; color: var(--azul); margin-bottom: 4px; }
+    .form-ok p { font-size: .9rem; color: var(--texto-suave); }
+
+    .garantia {
+      margin-top: 28px; color: rgba(255,255,255,.65);
+      font-size: .88rem; display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--texto); color: rgba(255,255,255,.6);
+      padding: 28px 0; text-align: center; font-size: .88rem;
+    }
+    footer strong { color: var(--blanco); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      section { padding: 60px 0; }
+      .precio-card { padding: 36px 24px; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .hero-btns .btn { width: 100%; max-width: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <div class="container">
+    <a href="#" class="nav-logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#1a237e" stroke="#1a237e" stroke-width="1.5" stroke-linejoin="round"/>
+      </svg>
+      Reseñas Gestionadas
+    </a>
+    <a href="#contacto" class="btn btn-azul nav-btn">Empezar ahora</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="container">
+    <h1 class="fade-in">Tu reputación en Google,<br><span>en buenas manos</span></h1>
+    <p class="fade-in">Respondemos todas tus reseñas de forma profesional en menos de 24 horas. Sin contratos. Sin complicaciones. Solo 15€/mes.</p>
+    <div class="hero-btns fade-in">
+      <a href="#contacto" class="btn btn-verde">Quiero empezar</a>
+      <a href="#proceso" class="btn btn-outline">Ver cómo funciona</a>
+    </div>
+    <div class="fade-in">
+      <div class="social-proof">
+        <span class="stars">★★★★★</span>
+        Más de 50 negocios confían en nosotros
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROBLEMA ── -->
+<section id="problema">
+  <div class="container">
+    <h2 class="section-titulo fade-in">¿Te suena esto?</h2>
+    <div class="cards-grid">
+      <div class="card fade-in">
+        <span class="card-emoji">😰</span>
+        <p>Tienes reseñas negativas sin contestar y no sabes qué decir</p>
+      </div>
+      <div class="card fade-in">
+        <span class="card-emoji">⏰</span>
+        <p>No tienes tiempo de revisar Google cada día</p>
+      </div>
+      <div class="card fade-in">
+        <span class="card-emoji">😬</span>
+        <p>Contestas mal y empeoras la situación sin querer</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SOLUCIÓN ── -->
+<section id="solucion">
+  <div class="container">
+    <h2 class="section-titulo fade-in">Nosotros lo gestionamos por ti</h2>
+    <div class="checks-lista">
+      <div class="check-item fade-in">
+        <span class="check-icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <p>Respondemos cada reseña de forma personalizada, nunca con plantillas genéricas</p>
+      </div>
+      <div class="check-item fade-in">
+        <span class="check-icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <p>Tono adaptado a tu tipo de negocio</p>
+      </div>
+      <div class="check-item fade-in">
+        <span class="check-icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <p>Respuesta en menos de 24 horas</p>
+      </div>
+      <div class="check-item fade-in">
+        <span class="check-icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        <p>Te avisamos de cada reseña nueva que llegue</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESO ── -->
+<section id="proceso">
+  <div class="container">
+    <h2 class="section-titulo fade-in">Tres pasos y listo</h2>
+    <div class="pasos">
+      <div class="paso fade-in">
+        <div class="paso-num">1</div>
+        <h3>Nos escribes por Instagram</h3>
+        <p>Escríbenos en menos de un minuto y te respondemos enseguida.</p>
+      </div>
+      <div class="paso fade-in">
+        <div class="paso-num">2</div>
+        <h3>Nos das acceso a tu ficha de Google</h3>
+        <p>Te explicamos cómo hacerlo paso a paso. Es fácil y solo lleva 2 minutos.</p>
+      </div>
+      <div class="paso fade-in">
+        <div class="paso-num">3</div>
+        <h3>Tú solo cobras más clientes</h3>
+        <p>Nosotros gestionamos todo. Tú te olvidas del problema para siempre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRECIO ── -->
+<section id="precio">
+  <div class="container">
+    <h2 class="section-titulo fade-in">Sin letras pequeñas</h2>
+    <div class="precio-card fade-in">
+      <div class="precio-amount"><span>€</span>15</div>
+      <div class="precio-periodo">al mes · todo incluido</div>
+      <ul class="precio-lista">
+        <li>Respuesta a todas las reseñas</li>
+        <li>Sin límite de reseñas</li>
+        <li>Tono personalizado a tu negocio</li>
+        <li>Respuesta garantizada en 24h</li>
+        <li>Sin permanencia, cancela cuando quieras</li>
+        <li>Soporte directo por Instagram</li>
+      </ul>
+      <a href="#contacto" class="btn btn-verde precio-btn">
+        Quiero empezar por 15€/mes
+      </a>
+      <p class="precio-nota">Pago mensual por Bizum o transferencia. Sin sorpresas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+  <div class="container">
+    <h2 class="section-titulo fade-in">Preguntas frecuentes</h2>
+    <div class="faq-lista fade-in">
+
+      <div class="faq-item">
+        <button class="faq-pregunta" aria-expanded="false">
+          ¿Necesito daros acceso a mi cuenta de Google?
+          <span class="faq-icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1a237e" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="faq-respuesta">
+          Sí, pero es muy sencillo. Te explicamos paso a paso cómo añadirnos como gestores de tu ficha de Google Business. Solo lleva 2 minutos y en ningún momento necesitamos tu contraseña.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" aria-expanded="false">
+          ¿Qué pasa si tengo muchas reseñas acumuladas?
+          <span class="faq-icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1a237e" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="faq-respuesta">
+          Las respondemos todas desde el principio sin coste adicional. No importa cuántas tengas acumuladas: las ponemos al día sin que pagues nada extra.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" aria-expanded="false">
+          ¿Puedo cancelar cuando quiera?
+          <span class="faq-icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1a237e" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="faq-respuesta">
+          Sí, sin permanencia ni penalizaciones. Nos avisas por Instagram y listo. Sin papeleo, sin explicaciones.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" aria-expanded="false">
+          ¿Respondéis también las reseñas positivas?
+          <span class="faq-icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1a237e" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="faq-respuesta">
+          Sí, todas. Las reseñas positivas también merecen una respuesta que fidelice al cliente y demuestre que tu negocio cuida a sus clientes.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-pregunta" aria-expanded="false">
+          ¿En cuánto tiempo empezáis?
+          <span class="faq-icono">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1a237e" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </span>
+        </button>
+        <div class="faq-respuesta">
+          En menos de 24 horas desde que confirmas el servicio. Sin esperas innecesarias.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACTO ── -->
+<section id="contacto">
+  <div class="container">
+    <h2 class="fade-in">Empieza hoy.<br>Tu competencia no duerme.</h2>
+    <p class="subtitulo fade-in">Déjanos tu nombre y teléfono y te contactamos nosotros. Sin compromiso.</p>
+    <div class="form-card fade-in">
+      <form id="contactForm" class="form-grupo" novalidate>
+        <div class="campo">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+        </div>
+        <div class="campo">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="600 000 000" required />
+        </div>
+        <button type="submit" class="btn btn-verde form-submit">Quiero que me contactéis</button>
+      </form>
+      <div class="form-ok" id="formOk">
+        <div class="ok-icono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h4>¡Recibido!</h4>
+        <p>Te contactamos en menos de 24 horas.</p>
+      </div>
+    </div>
+    <p class="garantia fade-in">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.65)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Primer mes sin compromiso · Garantía de devolución
+    </p>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <strong>Reseñas Gestionadas</strong> · Gestión profesional de reseñas de Google
+  </div>
+</footer>
+
+<script>
+  // ── Formulario contacto ──
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    if (!nombre || !telefono) return;
+    this.style.display = 'none';
+    document.getElementById('formOk').style.display = 'block';
+  });
+
+  // ── FAQ acordeón ──
+  document.querySelectorAll('.faq-pregunta').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const abierto = item.classList.contains('abierto');
+      document.querySelectorAll('.faq-item.abierto').forEach(el => {
+        el.classList.remove('abierto');
+        el.querySelector('.faq-pregunta').setAttribute('aria-expanded', 'false');
+      });
+      if (!abierto) {
+        item.classList.add('abierto');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // ── Fade-in al scroll ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach((el, i) => {
+    // Escalonar animaciones dentro de la misma sección
+    const siblings = el.parentElement.querySelectorAll('.fade-in');
+    let delay = 0;
+    siblings.forEach((s, idx) => { if (s === el) delay = idx * 80; });
+    el.style.transitionDelay = delay + 'ms';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
